@@ -40,7 +40,8 @@ TEST(Yurin_Stanislav_ComplexNumberTest_Zero_Devision,
     ASSERT_NO_THROW(z1/z2);
 }
 
-TEST(Yurin_Stanislav_ComplexNumberTest_Zero_Devision, Zero_Devision_Throw_Exception) {
+TEST(Yurin_Stanislav_ComplexNumberTest_Zero_Devision,
+     Zero_Devision_Throw_Exception) {
     double re1 = 5.4;
     double im1 = 3.2;
 
