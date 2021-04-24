@@ -2,8 +2,6 @@
 
 #include <gtest/gtest.h>
 
-#include <vector>
-
 #include "include/fraction-calc.h"
 
 TEST(Fraction, can_create_constructor_with_one_parameter_witch_is_3) {
@@ -39,4 +37,43 @@ TEST(Fraction, default_fraction_creating) {
 
     ASSERT_EQ(fc.getNumerator(), 0);
     ASSERT_EQ(fc.getDenominator(), 1);
+}
+
+TEST(Fraction, fraction_with_negative_parametres_becomes_positive) {
+    Fraction fc(-1, -2);
+
+    ASSERT_EQ(fc.getNumerator(), 1);
+    ASSERT_EQ(fc.getDenominator(), 2);
+}
+
+TEST(Fraction, moves_minus_to_numerator) {
+    Fraction fc(1, -2);
+
+    ASSERT_EQ(fc.getNumerator(), -1);
+    ASSERT_EQ(fc.getDenominator(), 2);
+}
+
+TEST(Fraction, ) {
+    Fraction fc(3, 6);
+
+    ASSERT_EQ(fc.getNumerator(), 1);
+    ASSERT_EQ(fc.getDenominator(), 2);
+}
+
+TEST(Fraction, gcd_3_and_6) {
+    Fraction fc;
+
+    ASSERT_EQ(fc.gcd(3, 6), 3);
+}
+
+TEST(Fraction, gcd_18_and_30) {
+    Fraction fc;
+
+    ASSERT_EQ(fc.gcd(18, 30), 6);
+}
+
+TEST(Fraction, gcd_minus_18_and_30) {
+    Fraction fc;
+
+    ASSERT_ANY_THROW(fc.gcd(-18, 30));
 }

@@ -1,8 +1,5 @@
 // Copyright 2021 Yurin Stanislav
 
-#include <iostream>
-#include <vector>
-
 #ifndef MODULES_FRACTION_CALC_BY_USING_GCD_INCLUDE_FRACTION_CALC_H_
 #define MODULES_FRACTION_CALC_BY_USING_GCD_INCLUDE_FRACTION_CALC_H_
 
@@ -12,6 +9,8 @@ class Fraction {
 
     int getNumerator();
     int getDenominator();
+
+    int gcd(int, int);
 
  private:
     int numerator;
