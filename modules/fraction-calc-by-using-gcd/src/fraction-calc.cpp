@@ -15,12 +15,10 @@ Fraction::Fraction(int n, int d) {
     denominator = d;
 }
 
-int Fraction::getNumerator()
-{
+int Fraction::getNumerator() {
     return numerator;
 }
 
-int Fraction::getDenominator()
-{
+int Fraction::getDenominator() {
     return denominator;
 }
