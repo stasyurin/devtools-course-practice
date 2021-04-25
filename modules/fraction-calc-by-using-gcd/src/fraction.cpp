@@ -5,8 +5,9 @@
 #include <math.h>
 
 Fraction::Fraction(int n, int d) {
-    if (d == 0)
+    if (d == 0) {
         throw "Can't have zero denominator";
+    }
 
     if (d < 0) {
         n *= -1;
@@ -28,21 +29,25 @@ int Fraction::getDenominator() const {
 }
 
 int Fraction::gcd(int a, int b) {
-    if (a < 0 || b < 0)
+    if (a < 0 || b < 0) {
         throw "Can't find gcd if one of numbers is negative";
+    }
 
-    while (a && b)
-        if (a > b)
+    while (a && b) {
+        if (a > b) {
             a %= b;
-        else
+        } else {
             b %= a;
+        }
+    }
 
     return a + b;
 }
 
 int Fraction::lcm(int a, int b) {
-    if (a < 0 || b < 0)
+    if (a < 0 || b < 0) {
         throw "Can't find gcd if one of numbers is negative";
+    }
 
     return a * b / gcd(a, b);
 }

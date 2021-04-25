@@ -10,10 +10,10 @@ class Fraction {
     int getNumerator() const;
     int getDenominator() const;
 
-    // наибольший общий делитель
+    // Greatest Commom Divisor - наибольший общий делитель
     int gcd(int, int);
 
-    // наименьшее общее кратное
+    // Least Common Multiple - наименьшее общее кратное
     int lcm(int, int);
 
     Fraction& operator=(const Fraction&);
