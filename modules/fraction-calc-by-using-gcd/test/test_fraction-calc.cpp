@@ -97,6 +97,16 @@ TEST(Fraction, lcm_minus_12_and_18) {
     ASSERT_ANY_THROW(f.lcm(-12, 18));
 }
 
+TEST(Fraction, can_self_appropriation) {
+    Fraction f(2, 3);
+
+    f = f;
+
+    ASSERT_EQ(2, f.getNumerator());
+    ASSERT_EQ(3, f.getDenominator());
+}
+
+
 TEST(Fraction, comparison_operator_overloading) {
     Fraction f1(2, 3);
     Fraction f2;
