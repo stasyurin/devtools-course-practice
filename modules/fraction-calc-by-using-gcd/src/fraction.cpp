@@ -49,7 +49,7 @@ int Fraction::lcm(int a, int b) {
         throw "Can't find gcd if one of numbers is negative";
     }
 
-    return a * b / gcd(a, b);
+    return a / gcd(a, b) * b;
 }
 
 Fraction &Fraction::operator=(const Fraction &right) {
