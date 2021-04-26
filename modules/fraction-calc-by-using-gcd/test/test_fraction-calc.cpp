@@ -2,31 +2,40 @@
 
 #include <gtest/gtest.h>
 
+#include <tuple>
+
 #include "include/fraction.h"
 
-TEST(Fraction, can_create_constructor_with_one_parameter_witch_is_3) {
-    Fraction f(3);
+typedef testing::TestWithParam<int>
+        Can_create_one_parametres_constructor;
 
-    ASSERT_EQ(3, f.getNumerator());
+TEST_P(Can_create_one_parametres_constructor, can_create_constructor) {
+    int n = GetParam();
+
+    Fraction f(n);
+
+    ASSERT_EQ(n, f.getNumerator());
 }
 
-TEST(Fraction, can_create_constructor_with_one_parameter_witch_is_29) {
-    Fraction f(29);
+INSTANTIATE_TEST_CASE_P(, Can_create_one_parametres_constructor,
+      testing::Values(3, 29)
+);
 
-    ASSERT_EQ(29, f.getNumerator());
+typedef testing::TestWithParam<std::tuple<int, int>>
+        Can_create_two_parametres_constructor;
+
+TEST_P(Can_create_two_parametres_constructor, can_create_constructor) {
+    int n = std::get<0>(GetParam());
+    int d = std::get<1>(GetParam());
+
+    Fraction f(n, d);
+
+    ASSERT_EQ(d, f.getDenominator());
 }
 
-TEST(Fraction, can_create_constructor_with_two_parametres_witch_is_29_and_43) {
-    Fraction f(29, 43);
-
-    ASSERT_EQ(43, f.getDenominator());
-}
-
-TEST(Fraction, can_create_constructor_with_two_parametres_witch_is_29_and_101) {
-    Fraction f(29, 101);
-
-    ASSERT_EQ(101, f.getDenominator());
-}
+INSTANTIATE_TEST_CASE_P(, Can_create_two_parametres_constructor,
+      testing::Values(std::make_tuple(2, 3), std::make_tuple(43, 99))
+);
 
 TEST(Fraction, throws_on_zero_denominator) {
     ASSERT_ANY_THROW(Fraction f(29, 0));
@@ -53,45 +62,63 @@ TEST(Fraction, moves_minus_to_numerator) {
     ASSERT_EQ(2, f.getDenominator());
 }
 
-TEST(Fraction, reduction) {
-    Fraction f(3, 6);
+typedef testing::TestWithParam<std::tuple<int, int, int, int>>
+        Reduction_par;
 
-    ASSERT_EQ(1, f.getNumerator());
-    ASSERT_EQ(2, f.getDenominator());
+TEST_P(Reduction_par, reduction) {
+    int n = std::get<0>(GetParam());
+    int d = std::get<1>(GetParam());
+
+    Fraction f(n, d);
+
+    ASSERT_EQ(std::get<2>(GetParam()), f.getNumerator());
+    ASSERT_EQ(std::get<3>(GetParam()), f.getDenominator());
 }
 
-TEST(Fraction, negative_fractions_reduction) {
-    Fraction f(8, -32);
+INSTANTIATE_TEST_CASE_P(, Reduction_par,
+      testing::Values(std::make_tuple(3, 6, 1, 2),
+                      std::make_tuple(8, -32, -1, 4))
+);
 
-    ASSERT_EQ(-1, f.getNumerator());
-    ASSERT_EQ(4, f.getDenominator());
-}
+typedef testing::TestWithParam<std::tuple<int, int, int>>
+        gcd_par;
 
-TEST(Fraction, gcd_3_and_6) {
+TEST_P(gcd_par, ) {
     Fraction f;
 
-    ASSERT_EQ(3, f.gcd(3, 6));
+    ASSERT_EQ(std::get<0>(GetParam()),
+              f.gcd(std::get<1>(GetParam()),
+                    std::get<2>(GetParam())));
 }
 
-TEST(Fraction, gcd_18_and_30) {
-    Fraction f;
+INSTANTIATE_TEST_CASE_P(, gcd_par,
+      testing::Values(std::make_tuple(3, 3, 6),
+                      std::make_tuple(6, 18, 30))
+);
 
-    ASSERT_EQ(6, f.gcd(18, 30));
-}
-
-TEST(Fraction, gcd_minus_18_and_30) {
+TEST(Fraction, gcd_negative_parameter) {
     Fraction f;
 
     ASSERT_ANY_THROW(f.gcd(-18, 30));
 }
 
-TEST(Fraction, lcm_12_and_18) {
+typedef testing::TestWithParam<std::tuple<int, int, int>>
+        lcm_par;
+
+TEST_P(lcm_par, ) {
     Fraction f;
 
-    ASSERT_EQ(36, f.lcm(12, 18));
+    ASSERT_EQ(std::get<0>(GetParam()),
+              f.lcm(std::get<1>(GetParam()),
+                    std::get<2>(GetParam())));
 }
 
-TEST(Fraction, lcm_minus_12_and_18) {
+INSTANTIATE_TEST_CASE_P(, lcm_par,
+      testing::Values(std::make_tuple(36, 12, 18),
+                      std::make_tuple(15, 15, 3))
+);
+
+TEST(Fraction, lcm_negative_parameter) {
     Fraction f;
 
     ASSERT_ANY_THROW(f.lcm(-12, 18));
@@ -106,7 +133,6 @@ TEST(Fraction, can_self_appropriation) {
     ASSERT_EQ(3, f.getDenominator());
 }
 
-
 TEST(Fraction, comparison_operator_overloading) {
     Fraction f1(2, 3);
     Fraction f2;
@@ -117,57 +143,78 @@ TEST(Fraction, comparison_operator_overloading) {
     ASSERT_EQ(3, f2.getDenominator());
 }
 
-TEST(Fraction, 2_at_3_plus_3_at_4) {
-    Fraction f1(2, 3);
-    Fraction f2(3, 4);
+typedef testing::TestWithParam<std::tuple<int, int, int, int, int, int>>
+        plus_par;
+
+TEST_P(plus_par, ) {
+    Fraction f1(std::get<0>(GetParam()), std::get<1>(GetParam()));
+    Fraction f2(std::get<2>(GetParam()), std::get<3>(GetParam()));
     Fraction f3;
 
     f3 = f1 + f2;
 
-    ASSERT_EQ(17, f3.getNumerator());
-    ASSERT_EQ(12, f3.getDenominator());
+    ASSERT_EQ(std::get<4>(GetParam()), f3.getNumerator());
+    ASSERT_EQ(std::get<5>(GetParam()), f3.getDenominator());
 }
 
-TEST(Fraction, minus_3_at_5_plus_4_at_7) {
-    Fraction f1(-3, 5);
-    Fraction f2(4, 7);
-    Fraction f3;
+INSTANTIATE_TEST_CASE_P(, plus_par,
+      testing::Values(std::make_tuple(2, 3, 3, 4, 17, 12),
+                      std::make_tuple(-3, 5, 4, 7, -1, 35))
+);
 
-    f3 = f1 + f2;
+typedef testing::TestWithParam<std::tuple<int, int, int, int, int, int>>
+        minus_par;
 
-    ASSERT_EQ(-1, f3.getNumerator());
-    ASSERT_EQ(35, f3.getDenominator());
-}
-
-TEST(Fraction, 2_at_5_minus_4_at_3) {
-    Fraction f1(2, 5);
-    Fraction f2(4, 3);
+TEST_P(minus_par, ) {
+    Fraction f1(std::get<0>(GetParam()), std::get<1>(GetParam()));
+    Fraction f2(std::get<2>(GetParam()), std::get<3>(GetParam()));
     Fraction f3;
 
     f3 = f1 - f2;
 
-    ASSERT_EQ(-14, f3.getNumerator());
-    ASSERT_EQ(15, f3.getDenominator());
+    ASSERT_EQ(std::get<4>(GetParam()), f3.getNumerator());
+    ASSERT_EQ(std::get<5>(GetParam()), f3.getDenominator());
 }
 
-TEST(Fraction, 3_at_2_multi_8_at_11) {
-    Fraction f1(3, 2);
-    Fraction f2(8, 11);
+INSTANTIATE_TEST_CASE_P(, minus_par,
+      testing::Values(std::make_tuple(2, 5, 4, 3, -14, 15),
+                      std::make_tuple(3, 8, 11, -5, 103, 40))
+);
+
+typedef testing::TestWithParam<std::tuple<int, int, int, int, int, int>>
+        multi_par;
+
+TEST_P(multi_par, ) {
+    Fraction f1(std::get<0>(GetParam()), std::get<1>(GetParam()));
+    Fraction f2(std::get<2>(GetParam()), std::get<3>(GetParam()));
     Fraction f3;
 
     f3 = f1 * f2;
 
-    ASSERT_EQ(12, f3.getNumerator());
-    ASSERT_EQ(11, f3.getDenominator());
+    ASSERT_EQ(std::get<4>(GetParam()), f3.getNumerator());
+    ASSERT_EQ(std::get<5>(GetParam()), f3.getDenominator());
 }
 
-TEST(Fraction, 13_at_11_dev_4_at_5) {
-    Fraction f1(13, 11);
-    Fraction f2(4, 5);
+INSTANTIATE_TEST_CASE_P(, multi_par,
+      testing::Values(std::make_tuple(3, 2, 8, 11, 12, 11),
+                      std::make_tuple(7, -4, -9, 3, 21, 4))
+);
+
+typedef testing::TestWithParam<std::tuple<int, int, int, int, int, int>>
+        dev_par;
+
+TEST_P(dev_par, ) {
+    Fraction f1(std::get<0>(GetParam()), std::get<1>(GetParam()));
+    Fraction f2(std::get<2>(GetParam()), std::get<3>(GetParam()));
     Fraction f3;
 
     f3 = f1 / f2;
 
-    ASSERT_EQ(65, f3.getNumerator());
-    ASSERT_EQ(44, f3.getDenominator());
+    ASSERT_EQ(std::get<4>(GetParam()), f3.getNumerator());
+    ASSERT_EQ(std::get<5>(GetParam()), f3.getDenominator());
 }
+
+INSTANTIATE_TEST_CASE_P(, dev_par,
+      testing::Values(std::make_tuple(13, 11, 4, 5, 65, 44),
+                      std::make_tuple(14, -6, -15, -2, -14, 45))
+);
