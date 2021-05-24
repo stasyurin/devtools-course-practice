@@ -6,11 +6,9 @@
 #include <string>
 
 class Application {
-public:
+ public:
     Application();
-
     std::string operator()(int argc, const char** argv);
-
 };
 
 #endif  // MODULES_WAVE_ALGORITHM_INCLUDE_APPLICATION_H_
