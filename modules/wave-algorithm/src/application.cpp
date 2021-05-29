@@ -1,10 +1,10 @@
 // Copyright 2021 Yurin Stanislav
 
-#include "include/application.h"
-#include "include/wave_algorithm.h"
-
 #include <vector>
 #include <string>
+
+#include "include/application.h"
+#include "include/wave_algorithm.h"
 
 WaveLib::Application::Application() : message_("") {}
 
