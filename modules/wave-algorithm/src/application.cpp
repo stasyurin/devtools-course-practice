@@ -45,10 +45,16 @@ bool WaveLib::Application::validateNumberOfArguments(int argc,
 }
 
 int parseInt(const char* arg) {
-    char* end;
-    int value = _strtoi64(arg, &end, 10);
+    std::string::size_type end;
+    int value;
+    try {
+        value = std::stoi(arg, &end, 10);
+    }
+    catch (std::invalid_argument& str) {
+        throw std::string("Wrong number format!");
+    }
 
-    if (end[0]) {
+    if (arg[end]) {
         throw std::string("Wrong number format!");
     }
 
