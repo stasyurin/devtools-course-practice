@@ -3,8 +3,8 @@
 #include "include/application.h"
 #include "include/wave_algorithm.h"
 
-#include <string>
 #include <vector>
+#include <string>
 
 WaveLib::Application::Application() : message_("") {}
 
@@ -23,7 +23,7 @@ void WaveLib::Application::help(const char* appname, const char* message) {
         "map is boolean-precision array in the following format:\n" +
         "  ['w' or 'f'],['w' or 'f'],...,['w' or 'f']\n" +
         "  where is <w> is the wall,\n" +
-        "  and <f> is the free way,\n" + 
+        "  and <f> is the free way,\n" +
         "  for example: f,f,w,f,w,w,w,f,w\n" +
         "start_point and finish_point" +
         "is integer-precision pairs in the following format:\n" +
@@ -32,7 +32,8 @@ void WaveLib::Application::help(const char* appname, const char* message) {
         "  for example: 1,0 2,1\n";
 }
 
-bool WaveLib::Application::validateNumberOfArguments(int argc, const char** argv) {
+bool WaveLib::Application::validateNumberOfArguments(int argc,
+                                                     const char** argv) {
     if (argc == 1) {
         help(argv[0]);
         return false;
@@ -102,9 +103,9 @@ std::string WaveLib::Application::operator()(int argc, const char** argv) {
     }
 
     try {
-        WaveLib::WaveAlgorithm algorithm(   args.mapHeight,
-                                            args.mapWidth,
-                                            args.map);
+        WaveLib::WaveAlgorithm algorithm(args.mapHeight,
+                                         args.mapWidth,
+                                         args.map);
 
         std::vector<WaveLib::Point> path;
         algorithm.findPath(args.start, args.finish, &path);
