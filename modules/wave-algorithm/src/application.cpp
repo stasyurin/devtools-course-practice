@@ -3,25 +3,32 @@
 #include "include/application.h"
 #include "include/wave_algorithm.h"
 
+#include <string>
+#include <vector>
+
 WaveLib::Application::Application() : message_("") {}
 
 void WaveLib::Application::help(const char* appname, const char* message) {
     message_ =
         std::string(message) +
-        "This is a shortest way finder application. It use wave algorithm to find it.\n\n" +
+        "This is a shortest way finder application. " +
+        "It use wave algorithm to find it.\n\n" +
         "Please provide arguments in the following format:\n\n" +
 
         "  $ " + appname + " <mapHeight> <mapWidth> " +
         "<map> <start_point> <finish_point>\n\n" +
 
-        "Where mapHeight and mapWidth are integer-precision positive numbers,\n" +
+        "Where mapHeight and mapWidth" +
+        "are integer-precision positive numbers,\n" +
         "map is boolean-precision array in the following format:\n" +
         "  ['w' or 'f'],['w' or 'f'],...,['w' or 'f']\n" +
         "  where is <w> is the wall,\n" +
         "  and <f> is the free way,\n" + 
         "  for example: f,f,w,f,w,w,w,f,w\n" +
-        "start_point and finish_point is integer-precision pairs in the following format:\n" +
-        "  [start_width_value],[start_height_value] [finish_width_value],[finish_height_value]\n"
+        "start_point and finish_point" +
+        "is integer-precision pairs in the following format:\n" +
+        "  [start_width_value],[start_height_value]"+
+        "[finish_width_value],[finish_height_value]\n"
         "  for example: 1,0 2,1\n";
 }
 
@@ -29,8 +36,7 @@ bool WaveLib::Application::validateNumberOfArguments(int argc, const char** argv
     if (argc == 1) {
         help(argv[0]);
         return false;
-    }
-    else if (argc != 6) {
+    } else if (argc != 6) {
         help(argv[0], "ERROR: Should be 5 arguments.\n\n");
         return false;
     }
@@ -96,7 +102,9 @@ std::string WaveLib::Application::operator()(int argc, const char** argv) {
     }
 
     try {
-        WaveLib::WaveAlgorithm algorithm(args.mapHeight, args.mapWidth, args.map);
+        WaveLib::WaveAlgorithm algorithm(   args.mapHeight,
+                                            args.mapWidth,
+                                            args.map);
 
         std::vector<WaveLib::Point> path;
         algorithm.findPath(args.start, args.finish, &path);
@@ -105,7 +113,8 @@ std::string WaveLib::Application::operator()(int argc, const char** argv) {
         stream << "Path: ";
         for (int i = 0; i < path.size() - 1; i++)
             stream << path[i].first << ',' << path[i].second << " -> ";
-        stream << path[path.size() - 1].first << ',' << path[path.size() - 1].second << "\n";
+        stream << path[path.size() - 1].first <<
+            ',' << path[path.size() - 1].second << "\n";
 
         message_ = stream.str();
     }
