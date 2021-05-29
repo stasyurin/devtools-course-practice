@@ -6,10 +6,8 @@
 
 #include "include/application.h"
 
-using namespace WaveLib;
-
 int main(int argc, const char** argv) {
-    Application app;
+    WaveLib::Application app;
     std::string output = app(argc, argv);
     printf("%s\n", output.c_str());
     return 0;
