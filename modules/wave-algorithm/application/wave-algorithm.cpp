@@ -4,12 +4,13 @@
 #include <stdio.h>
 #include <string>
 
-#include "include/wave_algorithm.h"
+#include "include/application.h"
+
+using namespace WaveLib;
 
 int main(int argc, const char** argv) {
-    // ComplexCalculator app;
-    // std::string output = app(argc, argv);
-    // printf("%s\n", output.c_str());
-    printf("Hello world!\n");
+    Application app;
+    std::string output = app(argc, argv);
+    printf("%s\n", output.c_str());
     return 0;
 }
