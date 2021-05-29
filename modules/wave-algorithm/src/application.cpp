@@ -118,7 +118,7 @@ std::string WaveLib::Application::operator()(int argc, const char** argv) {
 
         std::ostringstream stream;
         stream << "Path: ";
-        for (int i = 0; i < path.size() - 1; i++)
+        for (int i = 0; i < static_cast<int>(path.size() - 1); i++)
             stream << path[i].first << ',' << path[i].second << " -> ";
         stream << path[path.size() - 1].first <<
             ',' << path[path.size() - 1].second << "\n";
