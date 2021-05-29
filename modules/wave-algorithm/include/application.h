@@ -7,6 +7,7 @@
 #include <vector>
 #include <sstream>
 #include <iostream>
+#include <utility>
 
 namespace WaveLib {
 using Point = std::pair<int, int>;
