@@ -50,12 +50,12 @@ int parseInt(const char* arg) {
     try {
         value = std::stoi(arg, &end, 10);
     }
-    catch (std::invalid_argument& str) {
-        throw std::string("Wrong number format!");
+    catch (std::invalid_argument&) {
+        throw std::runtime_error("Wrong number format!");
     }
 
     if (arg[end]) {
-        throw std::string("Wrong number format!");
+        throw std::runtime_error("Wrong number format!");
     }
 
     return value;
@@ -73,7 +73,7 @@ std::vector<int> parseMap(const char* arg) {
         else if (s == "f")
             map.push_back(FREE);
         else
-            throw std::string("Wrong map format!");
+            throw std::runtime_error("Wrong map format!");
     }
 
     return map;
@@ -105,8 +105,8 @@ std::string WaveLib::Application::operator()(int argc, const char** argv) {
         args.start = parsePoint(argv[4]);
         args.finish = parsePoint(argv[5]);
     }
-    catch (std::string& str) {
-        return str;
+    catch (std::runtime_error& ex) {
+        return ex.what();
     }
 
     try {
