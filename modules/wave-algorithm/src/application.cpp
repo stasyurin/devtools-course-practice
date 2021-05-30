@@ -50,12 +50,12 @@ int parseInt(const char* arg) {
     try {
         value = std::stoi(arg, &end, 10);
     }
-    catch (std::invalid_argument& str) {
-        throw std::string("Wrong number format!");
+    catch (std::invalid_argument&) {
+        throw std::runtime_error("Wrong number format!");
     }
 
     if (arg[end]) {
-        throw std::string("Wrong number format!");
+        throw std::runtime_error("Wrong number format!");
     }
 
     return value;
@@ -67,13 +67,14 @@ std::vector<int> parseMap(const char* arg) {
     std::istringstream is(arg);
     std::string s;
 
-    while (std::getline(is, s, ','))
+    while (std::getline(is, s, ',')) {
         if (s == "w")
             map.push_back(WALL);
         else if (s == "f")
             map.push_back(FREE);
         else
-            throw std::string("Wrong map format!");
+            throw std::runtime_error("Wrong map format!");
+    }
 
     return map;
 }
@@ -104,8 +105,8 @@ std::string WaveLib::Application::operator()(int argc, const char** argv) {
         args.start = parsePoint(argv[4]);
         args.finish = parsePoint(argv[5]);
     }
-    catch (std::string& str) {
-        return str;
+    catch (std::runtime_error& ex) {
+        return ex.what();
     }
 
     try {
@@ -120,8 +121,7 @@ std::string WaveLib::Application::operator()(int argc, const char** argv) {
         stream << "Path: ";
         for (int i = 0; i < static_cast<int>(path.size() - 1); i++)
             stream << path[i].first << ',' << path[i].second << " -> ";
-        stream << path[path.size() - 1].first <<
-            ',' << path[path.size() - 1].second << "\n";
+        stream << path.back().first << ',' << path.back().second << "\n";
 
         message_ = stream.str();
     }
