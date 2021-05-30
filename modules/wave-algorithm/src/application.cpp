@@ -50,7 +50,7 @@ int parseInt(const char* arg) {
     try {
         value = std::stoi(arg, &end, 10);
     }
-    catch (std::invalid_argument&) {
+    catch (std::invalid_argument& ex) {
         throw std::runtime_error("Wrong number format!");
     }
 
