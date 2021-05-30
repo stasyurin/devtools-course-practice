@@ -2,6 +2,7 @@
 
 #include <vector>
 #include <string>
+#include <stdexcept>
 
 #include "include/application.h"
 #include "include/wave_algorithm.h"
